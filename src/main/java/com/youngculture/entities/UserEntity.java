@@ -1,13 +1,16 @@
 package com.youngculture.entities;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "users", schema = "mydb", catalog = "")
+@Table(name = "users", schema = "mydb")
 public class UserEntity {
     private int id;
     private String username;
     private String passwrd;
+    private Set<OrdersEntity> ordersEntity;
+    private CartEntity cartEntity;
 
     @Id
     @Column(name = "ID")
@@ -38,6 +41,19 @@ public class UserEntity {
     public void setPasswrd(String passwrd) {
         this.passwrd = passwrd;
     }
+
+    @OneToMany( cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn( name="USER_ID" )
+    public Set<OrdersEntity> getOrdersEntity( ){ return ordersEntity; }
+
+    public void setOrdersEntity( Set<OrdersEntity> ordersEntity ) { this.ordersEntity = ordersEntity; }
+
+    @OneToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinColumn( name = "ID", referencedColumnName = "USER_ID" )
+    public CartEntity getCartEntity( ){ return cartEntity; }
+
+    public void setCartEntity( CartEntity cartEntity ) { this.cartEntity = cartEntity; }
+
 
     @Override
     public boolean equals(Object o) {

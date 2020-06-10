@@ -8,6 +8,10 @@
 
   <display-name>Archetype Created Web Application</display-name>
 
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
   <servlet>
     <servlet-name>loginServlet</servlet-name>
     <servlet-class>com.youngculture.servlets.LoginServlet</servlet-class>
@@ -17,4 +21,86 @@
     <servlet-name>loginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>registerServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.RegisterServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>registerServlet</servlet-name>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>productsServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.ProductsServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>productsServlet</servlet-name>
+    <url-pattern>/products</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>logoutServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.LogoutServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>logoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>cartServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.CartServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>cartServlet</servlet-name>
+    <url-pattern>/cart</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ajaxServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.AjaxServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>ajaxServlet</servlet-name>
+    <url-pattern>/ajax</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>orderServlet</servlet-name>
+    <servlet-class>com.youngculture.servlets.OrderServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>orderServlet</servlet-name>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
+
+
+  <filter>
+    <filter-name>registerFilter</filter-name>
+    <filter-class>com.youngculture.filters.RegisterFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>registerFilter</filter-name>
+    <url-pattern>/register</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>initFilter</filter-name>
+    <filter-class>com.youngculture.filters.IndexFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>initFilter</filter-name>
+    <url-pattern>/index.jsp</url-pattern>
+  </filter-mapping>
+
 </web-app>
