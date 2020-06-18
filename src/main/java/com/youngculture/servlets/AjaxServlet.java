@@ -1,7 +1,7 @@
 package com.youngculture.servlets;
 
 import com.youngculture.entities.ProductsEntity;
-import com.youngculture.services.CartService;
+import com.youngculture.services.impl.CartService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,13 +24,19 @@ public class AjaxServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         Integer productId = Integer.valueOf( request.getParameter("productId" ) );
+        String username = (String)session.getAttribute("username" );
         Map<ProductsEntity, Integer> cart = (HashMap)session.getAttribute("cart" );
+        String action = request.getParameter("action");
 
-        cartService.removeItemFromCart( cart, productId );
+        if (action.equalsIgnoreCase("add")) {
+            cartService.addItemToCart( cart,productId,username );
+        } else if (action.equalsIgnoreCase("remove")) {
+            cartService.removeItemFromCart( cart, productId, username );
+        }
+
 
         session.setAttribute("cart", cart);
-        session.setAttribute("cartQuantity", (Integer)session.getAttribute("cartQuantity" ) - 1);
-        RequestDispatcher view = request.getRequestDispatcher("cart.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("pages/cart.jsp");
         view.forward(request, response);
     }
 }

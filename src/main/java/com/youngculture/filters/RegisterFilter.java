@@ -1,6 +1,7 @@
 package com.youngculture.filters;
 
-import com.youngculture.services.RegisterService;
+import com.youngculture.services.impl.RegisterService;
+import com.youngculture.services.intrf.RegisterServiceInterface;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import java.io.IOException;
 
 public class RegisterFilter implements Filter {
 
-    private RegisterService regService =  new RegisterService();
+    private RegisterServiceInterface regService =  new RegisterService();
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -23,6 +24,7 @@ public class RegisterFilter implements Filter {
 
         if(!req.getMethod().equalsIgnoreCase("POST")){
             filterChain.doFilter(servletRequest, servletResponse);
+            return;
         }
 
         String username = servletRequest.getParameter("registerUsername");
@@ -34,7 +36,7 @@ public class RegisterFilter implements Filter {
         if( !registerErrorMsg.equals( "" ) ) {
                 session = ((HttpServletRequest) servletRequest).getSession();
                 session.setAttribute("registerErrorMsg", registerErrorMsg);
-                req.getRequestDispatcher("login.jsp").forward(req, res);
+                req.getRequestDispatcher("pages/register.jsp").forward(req, res);
                 return ;
         }
 

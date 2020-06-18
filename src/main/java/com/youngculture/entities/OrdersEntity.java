@@ -13,6 +13,7 @@ public class OrdersEntity {
     private Set<OrderDetailsEntity> orderDetails;
 
     @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "ID")
     public int getId() {
         return id;
@@ -34,7 +35,7 @@ public class OrdersEntity {
 
 
     @Basic
-    @Column(name = "CREATED_AT")
+    @Column(name = "CREATED_AT", insertable=false)
     public Timestamp getCreatedAt() {
         return createdAt;
     }

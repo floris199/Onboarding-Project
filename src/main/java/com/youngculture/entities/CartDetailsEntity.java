@@ -1,16 +1,28 @@
 package com.youngculture.entities;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "cart_details", schema = "mydb")
+
 public class CartDetailsEntity {
-    private int cartId;
+    private Integer cartDetailsid;
     private Integer quantity;
+    private Integer cartId;
     private ProductsEntity productsEntity;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID")
+    public Integer getCartDetailsId() {
+        return cartDetailsid;
+    }
+
+    public void setCartDetailsId(int cartDetailsid) {
+        this.cartDetailsid = cartDetailsid;
+    }
+
+    @Basic
     @Column(name = "CART_ID")
     public int getCartId() {
         return cartId;
@@ -43,15 +55,16 @@ public class CartDetailsEntity {
 
         CartDetailsEntity that = (CartDetailsEntity) o;
 
-        if (cartId != that.cartId) return false;
+        if (cartDetailsid != that.cartDetailsid) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
+        if( productsEntity.getId() !=  that.getProductsEntity().getId() ) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = cartId;
+        int result = 0;
         result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
         return result;
     }

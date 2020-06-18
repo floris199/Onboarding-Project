@@ -4,18 +4,13 @@ import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.UserEntity;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class UserDAO implements DAOInterface<UserEntity> {
+import static com.youngculture.constants.Constants.EMPTY;
+import static com.youngculture.constants.Constants.REGISTER_ERROR;
 
-    private static final String USERNAME ="username";
-    private static final String REGISTER_ERROR = "Error during user registration.";
-    private static final String EMPTY = "";
+public class UserDAO implements DAOInterface<UserEntity> {
 
     @Override
     public List<UserEntity> getAll() {

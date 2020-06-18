@@ -1,6 +1,6 @@
 package com.youngculture.servlets;
 
-import com.youngculture.services.ProductsService;
+import com.youngculture.services.impl.ProductsService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ public class ProductsServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("products.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("pages/products.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -24,11 +24,13 @@ public class ProductsServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String selectedProductCategory = request.getParameter("selectedProductCategory");
+        session.setAttribute("selectedProductCategory", selectedProductCategory);
+
         if( selectedProductCategory != null ) {
 
             session.setAttribute("products", prodService.getProductsBasedOnCategory( selectedProductCategory ));
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("products.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("pages/products.jsp");
         dispatcher.forward(request, response);
     }
 

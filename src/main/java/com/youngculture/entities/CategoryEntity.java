@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class CategoryEntity {
     private int id;
     private String description;
-    private ProductsEntity productsEntity;
 
     @Id
     @Column(name = "ID")
@@ -28,11 +27,6 @@ public class CategoryEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    @OneToOne( mappedBy = "categoryEntity", fetch=FetchType.LAZY )
-    public ProductsEntity getProductsEntity() { return productsEntity; }
-
-    public void setProductsEntity( ProductsEntity productsEntity ) { this.productsEntity = productsEntity; }
 
     @Override
     public boolean equals(Object o) {

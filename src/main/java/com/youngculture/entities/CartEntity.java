@@ -1,6 +1,7 @@
 package com.youngculture.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -8,10 +9,10 @@ import java.util.Set;
 public class CartEntity {
     private int id;
     private int userId;
-    private Set<CartDetailsEntity> cartDetailsEntities;
+    private List<CartDetailsEntity> cartDetailsEntities;
 
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     @Column(name = "ID")
     public int getId() {
         return id;
@@ -33,9 +34,9 @@ public class CartEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn( name="CART_ID" )
-    public Set<CartDetailsEntity> getCartDetails( ){ return cartDetailsEntities; }
+    public List<CartDetailsEntity> getCartDetails( ){ return cartDetailsEntities; }
 
-    public void setCartDetails( Set<CartDetailsEntity> cartDetailsEntities ) { this.cartDetailsEntities = cartDetailsEntities; }
+    public void setCartDetails( List<CartDetailsEntity> cartDetailsEntities ) { this.cartDetailsEntities = cartDetailsEntities; }
 
 
     @Override

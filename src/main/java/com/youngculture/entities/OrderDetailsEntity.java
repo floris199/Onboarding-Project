@@ -5,11 +5,23 @@ import javax.persistence.*;
 @Entity
 @Table(name = "order_details", schema = "mydb")
 public class OrderDetailsEntity {
+    private int orderDetailsid;
     private int orderId;
     private int quantity;
     private ProductsEntity productsEntity;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "ID")
+    public Integer getOrderDetailsId() {
+        return orderDetailsid;
+    }
+
+    public void setOrderDetailsId(int orderDetailsid) {
+        this.orderDetailsid = orderDetailsid;
+    }
+
+    @Basic
     @Column(name = "ORDER_ID")
     public int getOrderId() {
         return orderId;
@@ -43,6 +55,7 @@ public class OrderDetailsEntity {
 
         OrderDetailsEntity that = (OrderDetailsEntity) o;
 
+        if( productsEntity.getId() != that.productsEntity.getId() ) return false;
         if (orderId != that.orderId) return false;
         if (quantity != that.quantity) return false;
 
