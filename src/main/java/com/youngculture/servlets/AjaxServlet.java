@@ -25,7 +25,7 @@ public class AjaxServlet extends HttpServlet {
 
         Integer productId = Integer.valueOf( request.getParameter("productId" ) );
         String username = (String)session.getAttribute("username" );
-        Map<ProductsEntity, Integer> cart = (HashMap)session.getAttribute("cart" );
+        Map<Integer, Integer> cart = (HashMap)session.getAttribute("cart" );
         String action = request.getParameter("action");
 
         if (action.equalsIgnoreCase("add")) {

@@ -5,20 +5,20 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products", schema = "mydb")
 public class ProductsEntity {
-    private int id;
+    private int productId;
     private String name;
     private String description;
     private CategoryEntity categoryEntity;
-    private PricesEntity priceEntity;
+    private PricesEntity pricesEntity;
 
     @Id
     @Column(name = "ID")
-    public int getId() {
-        return id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     @Basic
@@ -44,9 +44,9 @@ public class ProductsEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(referencedColumnName = "PRODUCT_ID")
-    public PricesEntity getPricesEntity() { return priceEntity; }
+    public PricesEntity getPricesEntity() { return pricesEntity; }
 
-    public void setPricesEntity( PricesEntity priceEntity ) { this.priceEntity = priceEntity; }
+    public void setPricesEntity( PricesEntity priceEntity ) { this.pricesEntity = priceEntity; }
 
     @OneToOne( cascade = CascadeType.ALL )
     @JoinTable( name = "PRODUCTS_CATEGORY",
@@ -63,7 +63,7 @@ public class ProductsEntity {
 
         ProductsEntity that = (ProductsEntity) o;
 
-        if (id != that.id) return false;
+        if (productId != that.productId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
@@ -72,7 +72,7 @@ public class ProductsEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = productId;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;

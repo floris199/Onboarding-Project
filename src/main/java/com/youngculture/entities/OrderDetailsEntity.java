@@ -7,8 +7,10 @@ import javax.persistence.*;
 public class OrderDetailsEntity {
     private int orderDetailsid;
     private int orderId;
+    private String productName;
+    private String productDescription;
+    private int productPrice;
     private int quantity;
-    private ProductsEntity productsEntity;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -32,6 +34,36 @@ public class OrderDetailsEntity {
     }
 
     @Basic
+    @Column(name = "PRODUCT_NAME")
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    @Basic
+    @Column(name = "PRODUCT_DESCRIPTION")
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
+
+    @Basic
+    @Column(name = "PRODUCT_PRICE")
+    public int getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
+
+    @Basic
     @Column(name = "QUANTITY")
     public int getQuantity() {
         return quantity;
@@ -41,12 +73,6 @@ public class OrderDetailsEntity {
         this.quantity = quantity;
     }
 
-    @ManyToOne
-    @JoinColumn(name="PRODUCT_ID")
-    public ProductsEntity getProductsEntity() { return productsEntity; }
-
-    public void setProductsEntity(ProductsEntity productsEntity) { this.productsEntity = productsEntity; }
-
 
     @Override
     public boolean equals(Object o) {
@@ -55,7 +81,9 @@ public class OrderDetailsEntity {
 
         OrderDetailsEntity that = (OrderDetailsEntity) o;
 
-        if( productsEntity.getId() != that.productsEntity.getId() ) return false;
+        if( !productName.equals( that.productName) ) return false;
+        if( !productDescription.equals( that.productDescription) ) return false;
+        if( productPrice != that.productPrice ) return false;
         if (orderId != that.orderId) return false;
         if (quantity != that.quantity) return false;
 
@@ -66,6 +94,7 @@ public class OrderDetailsEntity {
     public int hashCode() {
         int result = orderId;
         result = 31 * result + quantity;
+        result = 31 * result + productPrice;
         return result;
     }
 }

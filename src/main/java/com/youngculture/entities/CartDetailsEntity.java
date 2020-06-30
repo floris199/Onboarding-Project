@@ -57,7 +57,7 @@ public class CartDetailsEntity {
 
         if (cartDetailsid != that.cartDetailsid) return false;
         if (quantity != null ? !quantity.equals(that.quantity) : that.quantity != null) return false;
-        if( productsEntity.getId() !=  that.getProductsEntity().getId() ) return false;
+        if( productsEntity.getProductId() !=  that.getProductsEntity().getProductId() ) return false;
 
         return true;
     }

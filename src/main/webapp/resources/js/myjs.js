@@ -132,10 +132,27 @@ var ajaxCalls = (function( ) {
     };
 })();
 
+document.addEventListener("DOMContentLoaded", function(event) {
+    $(".increaseQuantity").on('click', function(e) {
+        e.stopImmediatePropagation();
+        ajaxCalls.add( this.value );
+    });
+    $(".decreaseQuantity").on('click', function(e) {
+        e.stopImmediatePropagation();
+        ajaxCalls.remove( this.value );
+    });
+    $(".addToCart").on('click', function(e) {
+        e.stopImmediatePropagation();
+        setProduct( this.value )
+    });
+    $("#orderButton").on('click', function(e) {
+        e.stopImmediatePropagation();
+        ajaxCalls.order(  )
+    });
+});
+
+
 function setProduct( productId, productName, productDescription, productPrice )
 {
     document.getElementById('product_id').value=productId;
-    document.getElementById('product_name').value=productName;
-    document.getElementById('product_description').value=productDescription;
-    document.getElementById('product_price').value=productPrice;
 }

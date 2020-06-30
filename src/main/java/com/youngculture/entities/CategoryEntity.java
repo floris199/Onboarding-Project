@@ -5,27 +5,27 @@ import javax.persistence.*;
 @Entity
 @Table(name = "category", schema = "mydb")
 public class CategoryEntity {
-    private int id;
-    private String description;
+    private int categoryId;
+    private String categoryDescription;
 
     @Id
     @Column(name = "ID")
-    public int getId() {
-        return id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     @Basic
     @Column(name = "DESCRIPTION")
-    public String getDescription() {
-        return description;
+    public String getCategoryDescription() {
+        return categoryDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCategoryDescription(String categoryDescription) {
+        this.categoryDescription = categoryDescription;
     }
 
     @Override
@@ -35,16 +35,16 @@ public class CategoryEntity {
 
         CategoryEntity that = (CategoryEntity) o;
 
-        if (id != that.id) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (categoryId != that.categoryId) return false;
+        if (categoryDescription != null ? !categoryDescription.equals(that.categoryDescription) : that.categoryDescription != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        int result = categoryId;
+        result = 31 * result + (categoryDescription != null ? categoryDescription.hashCode() : 0);
         return result;
     }
 }

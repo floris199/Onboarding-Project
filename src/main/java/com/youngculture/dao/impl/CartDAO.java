@@ -4,6 +4,7 @@ import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.*;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -31,49 +32,25 @@ public class CartDAO implements DAOInterface<CartEntity> {
     }
 
     @Override
-    public void update(CartEntity cartEntity) {
+    public void update(CartEntity cartEntity, Session session) throws HibernateException{
 
     }
 
     @Override
-    public void delete(CartEntity cartEntity) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+    public void delete(CartEntity cartEntity, Session session) throws HibernateException
+    {
+        session.createNativeQuery("delete from CART c where c.id = :id")
+                .setParameter("id", cartEntity.getId())
+                .executeUpdate();
 
-        try
-        {
-            session.createNativeQuery("delete from CART c where c.id = :id")
-                    .setParameter("id", cartEntity.getId())
-                    .executeUpdate();
-
-            session.getTransaction().commit();
-
-            session.close();
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-        }
+        session.getTransaction().commit();
     }
 
     @Override
-    public String save(CartEntity cartEntity) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+    public void save(CartEntity cartEntity, Session session) throws HibernateException
+    {
+        session.save(cartEntity);
 
-        try {
-            session.save(cartEntity);
-
-            session.getTransaction().commit();
-
-            session.close();
-
-            return String.valueOf( cartEntity.getId() );
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-            return "SAVING_ERROR";
-        }
+        session.getTransaction().commit();
     }
 }

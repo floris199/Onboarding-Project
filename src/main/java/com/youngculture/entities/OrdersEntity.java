@@ -10,7 +10,7 @@ public class OrdersEntity {
     private int id;
     private int userId;
     private Timestamp createdAt;
-    private Set<OrderDetailsEntity> orderDetails;
+    private Set<OrderDetailsEntity> products;
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -46,9 +46,9 @@ public class OrdersEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER )
     @JoinColumn( name="ORDER_ID" )
-    public Set<OrderDetailsEntity> getOrderDetails( ){ return orderDetails; }
+    public Set<OrderDetailsEntity> getProducts( ){ return products; }
 
-    public void setOrderDetails( Set<OrderDetailsEntity> orderDetails ) { this.orderDetails = orderDetails; }
+    public void setProducts( Set<OrderDetailsEntity> products ) { this.products = products; }
 
     @Override
     public boolean equals(Object o) {

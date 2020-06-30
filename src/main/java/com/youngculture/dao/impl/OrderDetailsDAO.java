@@ -3,6 +3,7 @@ package com.youngculture.dao.impl;
 import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.OrderDetailsEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -19,34 +20,18 @@ public class OrderDetailsDAO implements DAOInterface<OrderDetailsEntity> {
     }
 
     @Override
-    public void update(OrderDetailsEntity orderDetailsEntity) {
+    public void update(OrderDetailsEntity orderDetailsEntity, Session session) throws HibernateException{
 
     }
 
     @Override
-    public void delete(OrderDetailsEntity orderDetailsEntity) {
+    public void delete(OrderDetailsEntity orderDetailsEntity, Session session) throws HibernateException {
 
     }
 
     @Override
-    public String save( OrderDetailsEntity orderDetailsEntity )
+    public void save( OrderDetailsEntity orderDetailsEntity, Session session ) throws HibernateException
     {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        try {
-            session.save( orderDetailsEntity );
-
-            session.getTransaction( ).commit( );
-
-            session.close( );
-
-            return "";
-        }
-        catch( Exception e )
-        {
-            session.getTransaction().rollback();
-            return "SAVING_ERROR";
-        }
+        session.save( orderDetailsEntity );
     }
 }

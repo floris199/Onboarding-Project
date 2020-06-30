@@ -45,11 +45,10 @@ public class LoginServlet extends HttpServlet {
 
         session.setAttribute("username", username);
 
-        Map<ProductsEntity, Integer> cart = (HashMap) session.getAttribute("cart");
+        Map<Integer, Integer> cart = (HashMap) session.getAttribute("cart");
 
         cartService.mergeAndSaveCart( cart, username);
 
-        cart = cartService.transformFromEntityToMap( cartService.getCart( username ) );
         session.setAttribute("cart", cart );
 
 

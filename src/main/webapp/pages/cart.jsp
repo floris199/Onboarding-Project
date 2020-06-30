@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -34,18 +35,18 @@
                         </thead>
                         <tbody>
                         <c:set var="total" value="0"></c:set>
-                        <c:forEach var="item" items="${sessionScope.cart}">
-                            <c:set var="total" value="${total + item.key.pricesEntity.price * item.value}"></c:set>
-                            <tr id="tr${item.key.id}">
-                                <td>${item.key.description}</td>
-                                <td id="price${item.key.id}">${item.key.pricesEntity.price}</td>
-                                <td id="quantity${item.key.id}">${item.value}</td>
-                                <td id="sub-total${item.key.id}">${item.key.pricesEntity.price * item.value}</td>
+                        <c:forEach var="item" items="${sessionScope.cartDTO.cartDetailsDTOs}">
+                            <c:set var="total" value="${total + item.productDTO.price * item.quantity}"></c:set>
+                            <tr id="tr${item.productDTO.productId}">
+                                <td>${item.productDTO.description}</td>
+                                <td id="price${item.productDTO.productId}">${item.productDTO.price}</td>
+                                <td id="quantity${item.productDTO.productId}">${item.quantity}</td>
+                                <td id="sub-total${item.productDTO.productId}">${item.productDTO.price * item.quantity}</td>
                                 <td>
-                                    <button value="Remove" class="btn"
-                                            onclick="ajaxCalls.remove('${item.key.id}')"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
-                                    <button value="Add" class="btn"
-                                            onclick="ajaxCalls.add('${item.key.id}')"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
+                                    <button value="${item.productDTO.productId}" class="btn decreaseQuantity">
+                                        <i class="fa fa-arrow-down" aria-hidden="true"></i></button>
+                                    <button value="${item.productDTO.productId}" class="btn increaseQuantity">
+                                        <i class="fa fa-arrow-up" aria-hidden="true"></i></button>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -56,8 +57,7 @@
                         </tbody>
                     </table>
 
-                    <button id="orderButton" class="btn btn-light" type="submit" ${sessionScope.cartQuantity == 0 ? 'disabled' : ''}
-                            onclick="ajaxCalls.order()">Order</button>
+                    <button id="orderButton" class="btn btn-light" type="submit" ${sessionScope.cartQuantity == 0 ? 'disabled' : ''}>Order</button>
                 </div>
             </div>
         </div>
@@ -66,6 +66,6 @@
     <div id="emptyCartDiv" class="box ${sessionScope.cartQuantity > 0 ? 'hide' : ''}">
         <h4 align="center" class="margin-top80" id="emptyCartLabel">Your cart is empty. :(</h4>
     </div>
-    <jsp:include page="footer.jsp" />
+    <t:footer />
 </body>
 </html>

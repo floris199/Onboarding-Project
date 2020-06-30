@@ -4,6 +4,7 @@ import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.CartDetailsEntity;
 import com.youngculture.entities.CartEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -20,70 +21,34 @@ public class CartDetailsDAO implements DAOInterface<CartDetailsEntity> {
     }
 
     @Override
-    public void update(CartDetailsEntity cartDetailsEntity)
+    public void update(CartDetailsEntity cartDetailsEntity, Session session) throws HibernateException
     {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+        session.createNativeQuery("update CART_DETAILS c set c.quantity = :quantity " +
+                "where c.cart_id = :cartId and c.product_id = :productId")
+                .setParameter( "quantity", cartDetailsEntity.getQuantity() )
+                .setParameter( "cartId", cartDetailsEntity.getCartId() )
+                .setParameter( "productId", cartDetailsEntity.getProductsEntity().getProductId() )
+                .executeUpdate();
 
-        try {
-            session.createNativeQuery("update CART_DETAILS c set c.quantity = :quantity " +
-                    "where c.cart_id = :cartId and c.product_id = :productId")
-                    .setParameter( "quantity", cartDetailsEntity.getQuantity() )
-                    .setParameter( "cartId", cartDetailsEntity.getCartId() )
-                    .setParameter( "productId", cartDetailsEntity.getProductsEntity().getId() )
-                    .executeUpdate();
-
-            session.getTransaction().commit();
-
-            session.close();
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-        }
+        session.getTransaction().commit();
     }
 
     @Override
-    public void delete(CartDetailsEntity cartDetailsEntity)
+    public void delete(CartDetailsEntity cartDetailsEntity, Session session) throws HibernateException
     {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+        session.createNativeQuery("delete from CART_DETAILS c where c.cart_id = :cartId and c.product_id = :productId")
+                .setParameter( "cartId", cartDetailsEntity.getCartId() )
+                .setParameter( "productId", cartDetailsEntity.getProductsEntity().getProductId() )
+                .executeUpdate();
 
-        try
-        {
-            session.createNativeQuery("delete from CART_DETAILS c where c.cart_id = :cartId and c.product_id = :productId")
-                    .setParameter( "cartId", cartDetailsEntity.getCartId() )
-                    .setParameter( "productId", cartDetailsEntity.getProductsEntity().getId() )
-                    .executeUpdate();
-
-            session.getTransaction().commit();
-
-            session.close();
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-        }
+        session.getTransaction().commit();
     }
 
     @Override
-    public String save(CartDetailsEntity cartDetailsEntity)
+    public void save(CartDetailsEntity cartDetailsEntity, Session session) throws HibernateException
     {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+        session.save(cartDetailsEntity);
 
-        try {
-            session.save(cartDetailsEntity);
-
-            session.getTransaction().commit();
-
-            session.close();
-            return "";
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-            return "SAVING_ERROR";
-        }
+        session.getTransaction().commit();
     }
 }

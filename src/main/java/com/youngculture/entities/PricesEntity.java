@@ -7,7 +7,15 @@ import javax.persistence.*;
 public class PricesEntity {
     @Id
     @Column(name = "PRODUCT_ID")
-    private int productsId;
+    private int productId;
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     @Basic
     @Column(name = "PRICE")

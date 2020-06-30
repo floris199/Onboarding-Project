@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -37,9 +38,9 @@
                             <td>${order.id}</td>
                             <td>
                                 <c:set var="subTotal" value="0"/>
-                                <c:forEach var="item" items="${order.orderDetails}">
-                                    <pre>${item.productsEntity.name}:  ${item.quantity} x ${item.productsEntity.pricesEntity.price}$</pre>
-                                    <c:set var="subTotal" value="${subTotal + item.productsEntity.pricesEntity.price * item.quantity}" />
+                                <c:forEach var="item" items="${order.products}">
+                                    <pre>${item.productName}:  ${item.quantity} x ${item.productPrice}$</pre>
+                                    <c:set var="subTotal" value="${subTotal + item.productPrice * item.quantity}" />
                                 </c:forEach>
                             </td>
                             <td>${subTotal}</td>
@@ -58,10 +59,9 @@
     </div>
 
     <div id="emptyOrdersDiv" class="box ${requestScope.orders.size() > 0 ? 'hide' : ''}">
-
         <h4 align="center" class="margin-top80" id="emptyOrdersLabel">You have no orders. :(</h4>
     </div>
 
-    <jsp:include page="footer.jsp" />
+    <t:footer />
 </body>
 </html>

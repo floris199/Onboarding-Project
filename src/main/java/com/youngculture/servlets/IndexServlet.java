@@ -22,12 +22,12 @@ import java.util.Map;
 
 public class IndexServlet extends HttpServlet {
 
-/*    private DAOInterface<CategoryEntity> categoryDAO;
+    private DAOInterface<CategoryEntity> categoryDAO;
 
     public void init(ServletConfig config)
     {
         categoryDAO = new CategoryDAO();
-    }*/
+    }
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -36,14 +36,10 @@ public class IndexServlet extends HttpServlet {
 
         String username = (String)session.getAttribute("username");
 
-        List<CategoryEntity> categories = (List<CategoryEntity>)session.getAttribute("categories");
-        if( categories == null )
-        {
-            List<CategoryEntity> allCategories = new CategoryDAO().getAll();
-            session.setAttribute("categories", allCategories);
-        }
+        List<CategoryEntity> allCategories = categoryDAO.getAll();
+        session.setAttribute("categories", allCategories);
 
-        Map<ProductsEntity, Integer> cart = (HashMap)session.getAttribute("cart");
+        Map<Integer, Integer> cart = (HashMap)session.getAttribute("cart");
         if( cart == null )
         {
             cart = new HashMap<>();

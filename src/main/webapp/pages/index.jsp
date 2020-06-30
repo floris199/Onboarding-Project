@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -31,7 +32,7 @@
                 <tr>
                     <td class="no-top-border">
                         <button name="selectedProductCategory" class="btn"
-                                value="${category.description}">${category.description}</button>
+                                value="${category.categoryDescription}">${category.categoryDescription}</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -39,5 +40,5 @@
         </table>
     </form>
     </div>
-    <jsp:include page="footer.jsp" />
+    <t:footer />
 </body>

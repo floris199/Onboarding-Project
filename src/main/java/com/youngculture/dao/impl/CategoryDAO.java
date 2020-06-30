@@ -3,6 +3,7 @@ package com.youngculture.dao.impl;
 import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.CategoryEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 import java.util.List;
@@ -27,17 +28,14 @@ public class CategoryDAO implements DAOInterface<CategoryEntity> {
     }
 
     @Override
-    public void update(CategoryEntity categoryEntity) {
-
+    public void update(CategoryEntity categoryEntity, Session session) throws HibernateException{
     }
 
     @Override
-    public void delete(CategoryEntity categoryEntity) {
-
+    public void delete(CategoryEntity categoryEntity,Session session) throws HibernateException {
     }
 
     @Override
-    public String save(CategoryEntity categoryEntity) {
-        return null;
+    public void save(CategoryEntity categoryEntity, Session session) throws HibernateException {
     }
 }

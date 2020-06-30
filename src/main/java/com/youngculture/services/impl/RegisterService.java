@@ -1,8 +1,12 @@
 package com.youngculture.services.impl;
 
 import com.youngculture.dao.impl.UserDAO;
+import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.UserEntity;
 import com.youngculture.services.intrf.RegisterServiceInterface;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -16,7 +20,20 @@ public class RegisterService implements RegisterServiceInterface {
         user.setUsername(username);
         user.setPasswrd(passwrd );
 
-        return new UserDAO().save( user );
+        Session session = HibernateUtils.getSessionFactory().openSession();
+
+        try {
+            session.beginTransaction();
+            new UserDAO().save(user, session);
+            session.close();
+
+            return "";
+        }
+        catch(HibernateException e)
+        {
+            session.getTransaction().rollback();
+            return e.getMessage();
+        }
     }
 
     public String validateCredentials( String username, String passwrd, String confirmpasswrd )

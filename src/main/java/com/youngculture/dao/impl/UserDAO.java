@@ -3,7 +3,9 @@ package com.youngculture.dao.impl;
 import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
 import com.youngculture.entities.UserEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -29,33 +31,21 @@ public class UserDAO implements DAOInterface<UserEntity> {
     }
 
     @Override
-    public void update(UserEntity userEntity) {
+    public void update(UserEntity userEntity, Session session) throws HibernateException{
 
     }
 
     @Override
-    public void delete(UserEntity userEntity) {
+    public void delete(UserEntity userEntity, Session session) throws HibernateException{
 
     }
 
     @Override
-    public String save(UserEntity user) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-
-        try {
+    public void save(UserEntity user, Session session) throws HibernateException {
             session.save(user);
 
             session.getTransaction().commit();
 
             session.close();
-        }
-        catch(Exception e)
-        {
-            session.getTransaction().rollback();
-            return REGISTER_ERROR;
-        }
-
-        return EMPTY;
     }
 }

@@ -36,8 +36,7 @@ public class OrderServlet extends HttpServlet {
 
         String username = (String)session.getAttribute( "username" );
 
-        List<OrdersEntity> ordersEntityList =  orderService.getAllOrders( username );
-        request.setAttribute( "orders", ordersEntityList );
+        request.setAttribute( "orders", orderService.getAllOrders( username ) );
         RequestDispatcher dispatcher = request.getRequestDispatcher("pages/orders.jsp");
         dispatcher.forward(request, response);
     }
@@ -49,7 +48,7 @@ public class OrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         String username = (String)session.getAttribute( "username" );
-        Map<ProductsEntity, Integer> cart = (HashMap)session.getAttribute( "cart" );
+        Map<Integer, Integer> cart = (HashMap)session.getAttribute( "cart" );
 
         if( username == null || username.isEmpty() )
         {
@@ -58,8 +57,11 @@ public class OrderServlet extends HttpServlet {
         }
         else
         {
-            orderService.saveOrder( username );
-            cartService.removeCart( username);
+            if( orderService.saveOrder( username ).isEmpty() )
+            {
+                cartService.removeCart( username );
+                cartService.createCart( username );
+            }
 
             cart = new HashMap<>();
             session.setAttribute("cart", cart );

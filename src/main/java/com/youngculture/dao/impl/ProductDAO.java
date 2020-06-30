@@ -2,8 +2,10 @@ package com.youngculture.dao.impl;
 
 import com.youngculture.dao.intrf.DAOInterface;
 import com.youngculture.dao.utils.HibernateUtils;
+import com.youngculture.entities.CartEntity;
 import com.youngculture.entities.CategoryEntity;
 import com.youngculture.entities.ProductsEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -17,25 +19,6 @@ import java.util.List;
 
 public class ProductDAO implements DAOInterface<ProductsEntity> {
 
-
-/*    public static void main ( String args[] )
-    {
-        Integer  i = 1;
-        Session session = DAOUtils.getSessionFactory().openSession();
-
-        CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<OrdersEntity> cr = cb.createQuery(OrdersEntity.class);
-        Root<OrdersEntity> root = cr.from(OrdersEntity.class);
-        cr.select(root).where(cb.equal(root.<Integer>get( "id" ), i));
-
-        Query<OrdersEntity> query = session.createQuery(cr);
-        List<OrdersEntity> results = query.getResultList();
-
-        session.close();
-
-        return;
-    }*/
-
     @Override
     public List<ProductsEntity> getAll() {
         Session session = HibernateUtils.getSessionFactory().openSession();
@@ -48,30 +31,39 @@ public class ProductDAO implements DAOInterface<ProductsEntity> {
     }
 
     @Override
-    public List<ProductsEntity> get(String id) {
-        return null;
+    public List<ProductsEntity> get(String productId)
+    {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+
+        Integer productIdAsInt = Integer.valueOf( productId );
+        Query query = session.createQuery( "FROM ProductsEntity p where p.id =: productIdAsInt", ProductsEntity.class).setParameter("productIdAsInt", productIdAsInt);
+
+        List<ProductsEntity> results = query.getResultList();
+
+        session.close();
+
+        return results;
     }
 
     @Override
-    public void update(ProductsEntity productsEntity) {
+    public void update(ProductsEntity productsEntity, Session session) throws HibernateException{
 
     }
 
     @Override
-    public void delete(ProductsEntity productsEntity) {
+    public void delete(ProductsEntity productsEntity, Session session) throws HibernateException {
 
     }
 
     @Override
-    public String save(ProductsEntity productsEntity) {
-        return null;
+    public void save(ProductsEntity productsEntity, Session session) throws HibernateException{
     }
 
     public List<ProductsEntity> getProductsBasedOnCategory( String category )
     {
         Session session = HibernateUtils.getSessionFactory().openSession();
 
-        List<ProductsEntity> results = session.createQuery( "FROM ProductsEntity p where p.categoryEntity.description =: category",
+        List<ProductsEntity> results = session.createQuery( "FROM ProductsEntity p where p.categoryEntity.categoryDescription =: category",
                                                                     ProductsEntity.class).setParameter("category", category).getResultList();
 
         session.close();

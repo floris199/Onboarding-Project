@@ -101,4 +101,14 @@
     <url-pattern>/register</url-pattern>
   </filter-mapping>
 
+  <filter>
+    <filter-name>authorizationFilter</filter-name>
+    <filter-class>com.youngculture.filters.AuthorizationFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>authorizationFilter</filter-name>
+    <url-pattern>/order</url-pattern>
+  </filter-mapping>
+
 </web-app>
